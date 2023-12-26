@@ -1,0 +1,32 @@
+.signup-card{
+    margin-top: 80px;
+  
+    min-width: 500px;
+    display: flex;
+    justify-content: center;
+    outline: 2px black;
+    background-color:aliceblue;
+    font-size: x-large;    
+}
+.card-header{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+:host {
+    display: flex;
+    justify-content: center;
+    background-color: aquamarine;
+    min-height: 1000px;
+    
+  }
+
+  .mat-form-field{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    min-width: 400px;
+    border-radius: 2px;
+    
+  }
