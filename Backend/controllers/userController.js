@@ -32,8 +32,6 @@ const getUser = async(req,res) =>{
     try{
         
         const {email} = req.params
-        console.log("reqqqqqqqqqqqqqqqqqqqqqq")
-        console.log(req)
     await User.findOne({where:{email:email, is_deleted:false}}).then(
         (response) =>{
             response.password = undefined
@@ -49,4 +47,33 @@ const getUser = async(req,res) =>{
         res.status(500).json({error:"Internal server error"})
     }}
 
-module.exports = {addUser,getUser}
+   const updatePassword = async(req,res) =>{
+    try{
+        const {password,email} = req.body
+        const update = await User.findOne({where:{email:email, is_deleted:false}})
+        if(update){
+            const newPassword = hashSync(password,genSaltSync(10));
+            update.password = newPassword
+            const save = update.save().then((response) =>{
+                console.log(response)
+                res.status(200).json({message:"successfully updated",
+                                       response})
+            }).catch(err =>{
+                console.error(err)
+                res.status(400).json({error:"password reset was unsuccessful"})
+            })
+            
+        }else{
+            console.log(update)
+            res.status(400).json({error:"User not found"})
+            
+        }
+
+    }catch(err){
+        console.log(err);
+        res.status(500).json({error:"an error occured"})
+    }
+   }
+
+
+module.exports = {addUser,getUser,updatePassword}
